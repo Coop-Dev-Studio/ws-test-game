@@ -7,7 +7,7 @@ import {
 } from 'ws';
 
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 80;
 
 
 const app = express();
