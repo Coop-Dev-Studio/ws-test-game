@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "ws-test-game",
   "version": "1.0.0",
   "description": "WS Test Game",
@@ -12,12 +13,15 @@
   },
   "license": "ISC",
   "author": "Yuriy Kurenkov",
-  "type": "commonjs",
-  "main": "server.js",
+  "main": "./src/server.ts",
   "scripts": {
+    "dev": "tsx watch ./src/server.ts",
+    "build": "tsc",
+    "start": "node ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
   },
   "devDependencies": {
