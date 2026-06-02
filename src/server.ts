@@ -86,6 +86,7 @@ wss.on('connection', (ws: WebSocket) => {
           id: player.id,
           x: player.x,
           y: player.y,
+          color: player.color,
         });
       }
     } catch (error) {
