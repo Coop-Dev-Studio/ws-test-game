@@ -44,16 +44,62 @@ const createPlayer = (ws: WebSocket) => {
 };
 
 
+const broadcastExceptSelf = (
+  playerWS: WebSocket | null,
+  data: object,
+) => {
+  const message = JSON.stringify(data);
+  players.forEach((player) => {
+    if (player.ws !== playerWS && player.ws.readyState === WebSocket.OPEN) {
+      player.ws.send(message);
+    }
+  });
+};
+
+
 
 wss.on('connection', (ws: WebSocket) => {
   const player = createPlayer(ws);
   players.set(player.id, player);
-
   console.log(`Player ${player.id} connected, color: ${player.color}`);
+
+  ws.send(JSON.stringify({
+    type: 'init',
+    id: player.id,
+    color: player.color,
+  }));
+
+  broadcastExceptSelf(ws, {
+    type: 'new_player',
+    id: player.id,
+    color: player.color,
+  });
+
+  ws.on('message', (rawData) => {
+    try {
+      const data = JSON.parse(rawData.toString());
+      if (data.type === 'mouse_move') {
+        player.x = data.x;
+        player.y = data.y;
+        broadcastExceptSelf(ws, {
+          type: 'mouse_move',
+          id: player.id,
+          x: player.x,
+          y: player.y,
+        });
+      }
+    } catch (error) {
+      console.error(`Uncaught error: ${error}`);
+    }
+  });
 
   ws.on('close', () => {
     players.delete(player.id);
     console.log(`Player ${player.id} disconnected`);
+    broadcastExceptSelf(ws, {
+      type: 'player_left',
+      id: player.id,
+    })
   });
 
   ws.on('error', (error) => {
@@ -64,7 +110,10 @@ wss.on('connection', (ws: WebSocket) => {
 
 
 app.get('/players', (_req, res) => {
-  res.json([...players.values()]);
+  res.json(
+    [...players.values()]
+      .map(({ id, x, y, color }) => ({ id, x, y, color }))
+  );
 });
 
 
