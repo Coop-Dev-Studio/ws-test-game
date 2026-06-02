@@ -1,0 +1,29 @@
+{
+  "name": "ws-test-game",
+  "version": "1.0.0",
+  "description": "WS Test Game",
+  "homepage": "https://github.com/Coop-Dev-Studio/ws-test-game#readme",
+  "bugs": {
+    "url": "https://github.com/Coop-Dev-Studio/ws-test-game/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coop-Dev-Studio/ws-test-game.git"
+  },
+  "license": "ISC",
+  "author": "Yuriy Kurenkov",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
