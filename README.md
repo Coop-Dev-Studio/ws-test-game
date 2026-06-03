@@ -1,5 +1,3 @@
-Markdown
-
 ---
 title: Ws Test Game
 emoji: 🎮
